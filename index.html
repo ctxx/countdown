@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exams are coming</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--abyss:#070606;--blood:#ff2a1f;--ember:#ff7a1a;--bone:#e9e2d8;--ash:#8a817a;--pulse:3s}
+*{box-sizing:border-box;margin:0}
+html,body{background:var(--abyss);color:var(--bone);font-family:Barlow,system-ui,sans-serif}
+body{min-height:100vh;position:relative;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 35%,rgba(255,30,20,.35) 100%);animation:vig var(--pulse) ease-in-out infinite}
+@keyframes vig{0%,100%{opacity:.25}50%{opacity:1}}
+main{max-width:980px;margin:0 auto;padding:8vh 20px 10vh}
+h1{font-family:"Big Shoulders Display",Impact,sans-serif;font-weight:900;font-size:clamp(2.2rem,7vw,4.4rem);line-height:.95;letter-spacing:.01em;color:var(--bone)}
+#status{margin-top:14px;color:var(--ember);font-weight:600;font-size:1.05rem;min-height:1.6em}
+.clock{display:flex;gap:clamp(6px,2vw,22px);margin:6vh 0 4vh;align-items:flex-start}
+.unit{flex:1;text-align:center;border-left:3px solid var(--blood);padding-left:clamp(6px,1.5vw,16px);text-align:left}
+.num{font-family:"Big Shoulders Display",Impact,sans-serif;font-weight:900;font-size:clamp(3.4rem,17vw,10rem);line-height:.9;color:var(--blood);font-variant-numeric:tabular-nums;text-shadow:0 0 28px rgba(255,42,31,.55);animation:flick 7s infinite}
+.lbl{color:var(--ash);font-size:clamp(.8rem,2.4vw,1.1rem);margin-top:6px}
+@keyframes flick{0%,92%,100%{opacity:1}93%{opacity:.55}94%{opacity:1}96%{opacity:.4}97%{opacity:1}}
+.date{color:var(--ash);font-size:1rem}
+.date b{color:var(--bone)}
+h2{font-family:"Big Shoulders Display",Impact,sans-serif;font-weight:800;font-size:clamp(1.6rem,4vw,2.4rem);margin:9vh 0 2vh}
+#now{border:2px solid var(--blood);padding:18px 20px;font-size:clamp(1.15rem,3vw,1.6rem);font-weight:600;min-height:5.2em;display:flex;align-items:center}
+ul{list-style:none;padding:0;margin-top:3vh}
+li{padding:14px 0 14px 18px;border-left:2px solid #2a2322;font-size:1.05rem;line-height:1.5;max-width:70ch}
+li strong{color:var(--bone)}
+li span{color:var(--ash)}
+li:hover{border-left-color:var(--ember)}
+footer{margin-top:10vh;color:var(--ash);font-size:.9rem}
+.over h1,.over .num{color:var(--bone);text-shadow:none;animation:none}
+@media (prefers-reduced-motion:reduce){body::before,.num{animation:none}body::before{opacity:.5}}
+@media (max-width:520px){.clock{flex-wrap:wrap}.unit{flex:1 1 40%}}
+</style>
+</head>
+<body>
+<main>
+  <h1>The exams don't care how you feel.</h1>
+  <p id="status"></p>
+
+  <div class="clock" role="timer" aria-live="off">
+    <div class="unit"><div class="num" id="d">00</div><div class="lbl">days</div></div>
+    <div class="unit"><div class="num" id="h">00</div><div class="lbl">hours</div></div>
+    <div class="unit"><div class="num" id="m">00</div><div class="lbl">minutes</div></div>
+    <div class="unit"><div class="num" id="s">00</div><div class="lbl">seconds</div></div>
+  </div>
+  <p class="date">Until <b>November 2, 2026</b>. Every second you scroll here is one you don't get back.</p>
+
+  <h2>Read this. Then open your notes.</h2>
+  <div id="now"></div>
+
+  <ul>
+    <li><strong>Study now so you don't cry later.</strong> <span>Future you is begging present you.</span></li>
+    <li><strong>Phone in another room.</strong> <span>Not face down. Another room.</span></li>
+    <li><strong>25 minutes on, 5 minutes off.</strong> <span>Start the timer before you talk yourself out of it.</span></li>
+    <li><strong>Start with the subject you're avoiding.</strong> <span>The scary one doesn't get smaller by waiting.</span></li>
+    <li><strong>Past exams beat rereading.</strong> <span>Test yourself; recognizing a page is not knowing it.</span></li>
+    <li><strong>Sleep is part of studying.</strong> <span>An all-nighter the day before is a bad trade.</span></li>
+    <li><strong>"I'll start tomorrow" is how people fail.</strong> <span>Do ten minutes today. Just ten.</span></li>
+  </ul>
+
+  <footer>Close this tab and go study.</footer>
+</main>
+
+<script>
+const TARGET = new Date(2026, 10, 2, 0, 0, 0); // Nov 2, 2026, 00:00 local time (month is 0-based)
+const $ = id => document.getElementById(id);
+const pad = n => String(n).padStart(2, "0");
+
+const nudges = [
+  "Study now so you don't cry later.",
+  "Your notes won't read themselves.",
+  "Open the book. Right now. Not after this tab.",
+  "Nobody ever wished they had studied less.",
+  "You're not behind yet. Keep it that way.",
+  "Ten pages today is ten fewer panicking about later.",
+  "The clock is not slowing down for you.",
+  "Procrastinating feels great until the night before.",
+  "Tired of feeling guilty? Study for one hour."
+];
+let ni = Math.floor(Math.random() * nudges.length);
+function nextNudge(){ $("now").textContent = nudges[ni]; ni = (ni + 1) % nudges.length; }
+nextNudge(); setInterval(nextNudge, 8000);
+
+function statusFor(days){
+  if (days > 21) return "There's still time. That's exactly why people waste it.";
+  if (days > 14) return "Three weeks left. The panic phase is close.";
+  if (days > 7)  return "Two weeks. Every day you skip now gets charged to the last week.";
+  if (days > 2)  return "Final week. No more \"tomorrow\".";
+  return "It's happening. Study.";
+}
+
+function tick(){
+  let diff = TARGET - new Date();
+  if (diff <= 0){
+    document.body.classList.add("over");
+    $("d").textContent = $("h").textContent = $("m").textContent = $("s").textContent = "00";
+    $("status").textContent = "The day has arrived. Good luck.";
+    document.title = "It's exam day";
+    return;
+  }
+  const s = Math.floor(diff / 1000);
+  const d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600),
+        m = Math.floor(s % 3600 / 60), sec = s % 60;
+  $("d").textContent = pad(d); $("h").textContent = pad(h);
+  $("m").textContent = pad(m); $("s").textContent = pad(sec);
+  $("status").textContent = statusFor(d);
+  // the closer the exams, the faster the red pulse
+  document.documentElement.style.setProperty("--pulse", d > 14 ? "3s" : d > 7 ? "2s" : d > 2 ? "1.3s" : "0.8s");
+  document.title = `${d}d ${pad(h)}h ${pad(m)}m left | Study`;
+}
+tick(); setInterval(tick, 1000);
+</script>
+</body>
+</html>
