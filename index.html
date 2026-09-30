@@ -6,25 +6,21 @@
 <title>Exams are coming</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800;900&family=Barlow:wght@400;500;600&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root{--abyss:#070606;--blood:#ff2a1f;--ember:#ff7a1a;--bone:#e9e2d8;--ash:#8a817a;--pulse:3s}
 *{box-sizing:border-box;margin:0}
 html,body{background:var(--abyss);color:var(--bone);font-family:Barlow,system-ui,sans-serif}
 body{min-height:100vh;position:relative;overflow-x:hidden}
-body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 35%,rgba(255,30,20,.35) 100%);animation:vig var(--pulse) ease-in-out infinite}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;background:radial-gradient(ellipse at center,transparent 40%,rgba(255,30,20,.38) 100%);animation:vig var(--pulse) ease-in-out infinite}
 @keyframes vig{0%,100%{opacity:.25}50%{opacity:1}}
-main{max-width:980px;margin:0 auto;padding:8vh 20px 10vh}
-h1{font-family:"Big Shoulders Display",Impact,sans-serif;font-weight:900;font-size:clamp(2.2rem,7vw,4.4rem);line-height:.95;letter-spacing:.01em;color:var(--bone)}
-#status{margin-top:14px;color:var(--ember);font-weight:600;font-size:1.05rem;min-height:1.6em}
-.clock{display:flex;gap:clamp(6px,2vw,22px);margin:6vh 0 4vh;align-items:flex-start}
-.unit{flex:1;text-align:center;border-left:3px solid var(--blood);padding-left:clamp(6px,1.5vw,16px);text-align:left}
-.num{font-family:"Big Shoulders Display",Impact,sans-serif;font-weight:900;font-size:clamp(3.4rem,17vw,10rem);line-height:.9;color:var(--blood);font-variant-numeric:tabular-nums;text-shadow:0 0 28px rgba(255,42,31,.55);animation:flick 7s infinite}
-.lbl{color:var(--ash);font-size:clamp(.8rem,2.4vw,1.1rem);margin-top:6px}
-@keyframes flick{0%,92%,100%{opacity:1}93%{opacity:.55}94%{opacity:1}96%{opacity:.4}97%{opacity:1}}
-.date{color:var(--ash);font-size:1rem}
-.date b{color:var(--bone)}
-h2{font-family:"Big Shoulders Display",Impact,sans-serif;font-weight:800;font-size:clamp(1.6rem,4vw,2.4rem);margin:9vh 0 2vh}
+.hero{height:100vh;height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;gap:1.2vh}
+h1{font-family:"Big Shoulders Display",Impact,sans-serif;font-weight:900;font-size:clamp(1.3rem,4vw,2.4rem);text-align:center;line-height:1}
+#clock{width:min(84vh,96vw);height:min(84vh,96vw);max-height:calc(100dvh - 110px);max-width:calc(100dvh - 110px);filter:drop-shadow(0 0 40px rgba(255,42,31,.4))}
+#status{color:var(--ember);font-weight:600;font-size:clamp(.9rem,2.2vw,1.15rem);text-align:center}
+.hand{transition:transform .18s cubic-bezier(.3,1.6,.5,1)}
+main{max-width:980px;margin:0 auto;padding:4vh 20px 10vh;position:relative;z-index:2}
+h2{font-family:"Big Shoulders Display",Impact,sans-serif;font-weight:800;font-size:clamp(1.6rem,4vw,2.4rem);margin:4vh 0 2vh}
 #now{border:2px solid var(--blood);padding:18px 20px;font-size:clamp(1.15rem,3vw,1.6rem);font-weight:600;min-height:5.2em;display:flex;align-items:center}
 ul{list-style:none;padding:0;margin-top:3vh}
 li{padding:14px 0 14px 18px;border-left:2px solid #2a2322;font-size:1.05rem;line-height:1.5;max-width:70ch}
@@ -32,27 +28,37 @@ li strong{color:var(--bone)}
 li span{color:var(--ash)}
 li:hover{border-left-color:var(--ember)}
 footer{margin-top:10vh;color:var(--ash);font-size:.9rem}
-.over h1,.over .num{color:var(--bone);text-shadow:none;animation:none}
-@media (prefers-reduced-motion:reduce){body::before,.num{animation:none}body::before{opacity:.5}}
-@media (max-width:520px){.clock{flex-wrap:wrap}.unit{flex:1 1 40%}}
+.ctl{position:fixed;top:12px;right:12px;z-index:5;display:flex;gap:8px}
+.ctl button{background:#140f0e;color:var(--bone);border:1px solid #3a2f2c;padding:8px 12px;font:600 .85rem Barlow,sans-serif;cursor:pointer;border-radius:4px}
+.ctl button:hover,.ctl button:focus-visible{border-color:var(--blood);outline:none}
+#gate{position:fixed;inset:0;z-index:10;background:var(--abyss);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;text-align:center;padding:20px}
+#gate p{font-family:"Big Shoulders Display",Impact,sans-serif;font-weight:900;font-size:clamp(2rem,7vw,4rem);line-height:1}
+#gate button{background:var(--blood);color:#fff;border:0;padding:16px 34px;font:700 1.2rem Barlow,sans-serif;cursor:pointer;border-radius:4px}
+#gate small{color:var(--ash)}
+@media (prefers-reduced-motion:reduce){body::before{animation:none;opacity:.5}.hand{transition:none}}
 </style>
 </head>
 <body>
-<main>
+<div id="gate">
+  <p>Your exams are close.</p>
+  <button id="go">Start the clock (with sound)</button>
+  <small>Sound turns on after you click. Mute anytime, top right.</small>
+</div>
+
+<div class="ctl">
+  <button id="mute">Sound: on</button>
+  <button id="test">Test bong</button>
+</div>
+
+<section class="hero">
   <h1>The exams don't care how you feel.</h1>
+  <svg id="clock" viewBox="0 0 500 500" role="timer" aria-label="Time left until exams"></svg>
   <p id="status"></p>
+</section>
 
-  <div class="clock" role="timer" aria-live="off">
-    <div class="unit"><div class="num" id="d">00</div><div class="lbl">days</div></div>
-    <div class="unit"><div class="num" id="h">00</div><div class="lbl">hours</div></div>
-    <div class="unit"><div class="num" id="m">00</div><div class="lbl">minutes</div></div>
-    <div class="unit"><div class="num" id="s">00</div><div class="lbl">seconds</div></div>
-  </div>
-  <p class="date">Until <b>November 2, 2026</b>. Every second you scroll here is one you don't get back.</p>
-
+<main>
   <h2>Read this. Then open your notes.</h2>
   <div id="now"></div>
-
   <ul>
     <li><strong>Study now so you don't cry later.</strong> <span>Future you is begging present you.</span></li>
     <li><strong>Phone in another room.</strong> <span>Not face down. Another room.</span></li>
@@ -62,15 +68,129 @@ footer{margin-top:10vh;color:var(--ash);font-size:.9rem}
     <li><strong>Sleep is part of studying.</strong> <span>An all-nighter the day before is a bad trade.</span></li>
     <li><strong>"I'll start tomorrow" is how people fail.</strong> <span>Do ten minutes today. Just ten.</span></li>
   </ul>
-
   <footer>Close this tab and go study.</footer>
 </main>
 
 <script>
 const TARGET = new Date(2026, 10, 2, 0, 0, 0); // Nov 2, 2026, 00:00 local time (month is 0-based)
+const MAX_BONGS = 12;      // hour strikes are capped at this many (Big Ben style: 3 pm = 3 bongs)
+const BONG_GAP_MS = 3200;  // time between bongs
 const $ = id => document.getElementById(id);
 const pad = n => String(n).padStart(2, "0");
+const NS = "http://www.w3.org/2000/svg";
 
+/* ---------- Big Ben style face ---------- */
+const svg = $("clock");
+function el(tag, attrs, parent, text){
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (text != null) e.textContent = text;
+  (parent || svg).appendChild(e); return e;
+}
+const defs = el("defs", {});
+const g = el("radialGradient", {id:"gold", cx:"40%", cy:"30%", r:"90%"}, defs);
+el("stop", {offset:"0", "stop-color":"#e7c66a"}, g);
+el("stop", {offset:"0.6", "stop-color":"#a8832f"}, g);
+el("stop", {offset:"1", "stop-color":"#5e4512"}, g);
+const d = el("radialGradient", {id:"dial", cx:"50%", cy:"45%", r:"60%"}, defs);
+el("stop", {offset:"0", "stop-color":"#f4efe6"}, d);
+el("stop", {offset:"1", "stop-color":"#cfc6b6"}, d);
+
+el("circle", {cx:250, cy:250, r:248, fill:"url(#gold)"});
+el("circle", {cx:250, cy:250, r:232, fill:"#15100e"});
+el("circle", {cx:250, cy:250, r:224, fill:"url(#gold)"});
+el("circle", {cx:250, cy:250, r:219, fill:"url(#dial)"});
+
+for (let i = 0; i < 60; i++){
+  const a = i * 6 * Math.PI / 180, big = i % 5 === 0;
+  const r1 = big ? 198 : 204, r2 = 214;
+  el("line", {x1:250 + r1*Math.sin(a), y1:250 - r1*Math.cos(a), x2:250 + r2*Math.sin(a), y2:250 - r2*Math.cos(a),
+    stroke:"#1a1412", "stroke-width": big ? 3 : 1.2});
+}
+const roman = ["XII","I","II","III","IIII","V","VI","VII","VIII","IX","X","XI"];
+roman.forEach((t, i) => {
+  const a = i * 30 * Math.PI / 180;
+  el("text", {x:250 + 165*Math.sin(a), y:250 - 165*Math.cos(a) + 12, "text-anchor":"middle",
+    "font-family":"Cinzel, Georgia, serif", "font-weight":700, "font-size":34, fill:"#1a1412"}, null, t);
+});
+
+/* countdown readouts on the dial */
+el("text", {x:250, y:142, "text-anchor":"middle", "font-family":"Barlow, sans-serif", "font-weight":600, "font-size":15, fill:"#5a4a44"}, null, "DAYS LEFT");
+const daysTxt = el("text", {id:"days", x:250, y:200, "text-anchor":"middle", "font-family":"'Big Shoulders Display', Impact, sans-serif",
+  "font-weight":900, "font-size":70, fill:"#c4140c"}, null, "00");
+el("rect", {x:170, y:335, width:160, height:44, rx:6, fill:"#15100e", opacity:.92});
+const digiTxt = el("text", {id:"digi", x:250, y:366, "text-anchor":"middle", "font-family":"'Big Shoulders Display', Impact, sans-serif",
+  "font-weight":800, "font-size":32, fill:"#ff2a1f", "letter-spacing":2}, null, "00:00:00");
+
+/* hands: hour / minute / second show the time REMAINING */
+function hand(id, pts, extra){
+  const grp = el("g", {id, class:"hand", style:"transform-origin:250px 250px"});
+  el("polygon", {points:pts, fill: extra && extra.fill || "#15100e"}, grp);
+  return grp;
+}
+const hHand = hand("hh", "244,268 250,230 256,268 252,180 250,150 248,180", {});
+el("circle", {cx:250, cy:185, r:9, fill:"none", stroke:"#15100e", "stroke-width":4}, hHand);
+const mHand = hand("mh", "246,272 250,240 254,272 252,100 250,60 248,100", {});
+el("circle", {cx:250, cy:105, r:6, fill:"none", stroke:"#15100e", "stroke-width":3}, mHand);
+const sHand = el("g", {id:"sh", class:"hand", style:"transform-origin:250px 250px"});
+el("line", {x1:250, y1:290, x2:250, y2:48, stroke:"#d6180f", "stroke-width":3}, sHand);
+el("circle", {cx:250, cy:285, r:7, fill:"#d6180f"}, sHand);
+el("circle", {cx:250, cy:250, r:10, fill:"#d6180f", stroke:"#15100e", "stroke-width":3});
+
+/* ---------- Sound (Web Audio, no files needed) ---------- */
+let ctx = null, muted = false, noiseBuf = null, flip = false;
+function initAudio(){
+  if (ctx) return;
+  ctx = new (window.AudioContext || window.webkitAudioContext)();
+  noiseBuf = ctx.createBuffer(1, ctx.sampleRate * 0.06, ctx.sampleRate);
+  const ch = noiseBuf.getChannelData(0);
+  for (let i = 0; i < ch.length; i++) ch[i] = Math.random() * 2 - 1;
+}
+function playTick(){
+  if (!ctx || muted) return;
+  const t = ctx.currentTime; flip = !flip;
+  const src = ctx.createBufferSource(); src.buffer = noiseBuf;
+  const bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = flip ? 2200 : 1500; bp.Q.value = 3;
+  const gn = ctx.createGain();
+  gn.gain.setValueAtTime(0.0001, t);
+  gn.gain.exponentialRampToValueAtTime(0.9, t + 0.002);
+  gn.gain.exponentialRampToValueAtTime(0.0001, t + 0.05);
+  src.connect(bp).connect(gn).connect(ctx.destination); src.start(t);
+  const o = ctx.createOscillator(), og = ctx.createGain();
+  o.frequency.value = flip ? 150 : 115;
+  og.gain.setValueAtTime(0.35, t); og.gain.exponentialRampToValueAtTime(0.0001, t + 0.06);
+  o.connect(og).connect(ctx.destination); o.start(t); o.stop(t + 0.07);
+}
+function playBong(){
+  if (!ctx || muted) return;
+  const t = ctx.currentTime, base = 164.8; // E3, the note of the big bell
+  const partials = [[0.5,1],[1,0.9],[1.19,0.5],[1.56,0.3],[2,0.35],[2.66,0.2],[3.3,0.12],[4.1,0.08]];
+  const master = ctx.createGain(); master.gain.value = 0.5; master.connect(ctx.destination);
+  partials.forEach(([ratio, amp], i) => {
+    [0, 0.7].forEach(detune => { // two slightly detuned copies create the slow "nnnn" wobble
+      const o = ctx.createOscillator(), gn = ctx.createGain();
+      o.type = "sine"; o.frequency.value = base * ratio + detune * (i < 3 ? 1 : 0);
+      const dur = 7 / (1 + i * 0.35);
+      gn.gain.setValueAtTime(0.0001, t);
+      gn.gain.exponentialRampToValueAtTime(amp * 0.22, t + 0.012);
+      gn.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(gn).connect(master); o.start(t); o.stop(t + dur + 0.1);
+    });
+  });
+}
+let bonging = false;
+function strike(hour){
+  if (bonging) return;
+  bonging = true;
+  const n = Math.min(MAX_BONGS, (hour % 12) || 12);
+  for (let i = 0; i < n; i++) setTimeout(() => { playBong(); if (i === n - 1) setTimeout(() => bonging = false, 2000); }, i * BONG_GAP_MS);
+}
+
+$("go").onclick = () => { initAudio(); ctx.resume(); $("gate").style.display = "none"; playTick(); };
+$("mute").onclick = e => { muted = !muted; e.target.textContent = "Sound: " + (muted ? "off" : "on"); };
+$("test").onclick = () => { initAudio(); ctx.resume(); playBong(); };
+
+/* ---------- Nudges ---------- */
 const nudges = [
   "Study now so you don't cry later.",
   "Your notes won't read themselves.",
@@ -94,26 +214,39 @@ function statusFor(days){
   return "It's happening. Study.";
 }
 
-function tick(){
-  let diff = TARGET - new Date();
+/* ---------- Main loop, aligned to the real second ---------- */
+let prevHour = new Date().getHours();
+function render(){
+  const now = new Date(), diff = TARGET - now;
   if (diff <= 0){
-    document.body.classList.add("over");
-    $("d").textContent = $("h").textContent = $("m").textContent = $("s").textContent = "00";
+    daysTxt.textContent = "00"; digiTxt.textContent = "00:00:00";
     $("status").textContent = "The day has arrived. Good luck.";
     document.title = "It's exam day";
-    return;
+    return false;
   }
   const s = Math.floor(diff / 1000);
-  const d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600),
+  const dd = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600),
         m = Math.floor(s % 3600 / 60), sec = s % 60;
-  $("d").textContent = pad(d); $("h").textContent = pad(h);
-  $("m").textContent = pad(m); $("s").textContent = pad(sec);
-  $("status").textContent = statusFor(d);
-  // the closer the exams, the faster the red pulse
-  document.documentElement.style.setProperty("--pulse", d > 14 ? "3s" : d > 7 ? "2s" : d > 2 ? "1.3s" : "0.8s");
-  document.title = `${d}d ${pad(h)}h ${pad(m)}m left | Study`;
+  daysTxt.textContent = pad(dd);
+  digiTxt.textContent = `${pad(h)}:${pad(m)}:${pad(sec)}`;
+  sHand.style.transform = `rotate(${sec * 6}deg)`;
+  mHand.style.transform = `rotate(${(m + sec / 60) * 6}deg)`;
+  hHand.style.transform = `rotate(${((h % 12) + m / 60) * 30}deg)`;
+  $("status").textContent = statusFor(dd);
+  document.documentElement.style.setProperty("--pulse", dd > 14 ? "3s" : dd > 7 ? "2s" : dd > 2 ? "1.3s" : "0.8s");
+  document.title = `${dd}d ${pad(h)}h ${pad(m)}m left | Study`;
+  return true;
 }
-tick(); setInterval(tick, 1000);
+function loop(){
+  const running = render();
+  if (running){
+    playTick();
+    const hr = new Date().getHours();
+    if (hr !== prevHour){ prevHour = hr; strike(hr); }
+    setTimeout(loop, 1000 - Date.now() % 1000);
+  }
+}
+loop();
 </script>
 </body>
 </html>
